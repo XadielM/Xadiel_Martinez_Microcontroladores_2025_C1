@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <windows.h> //Para la funcion de sleep
 
 //Definicion de estados
 #define ESTADO_INICIAL 0
@@ -175,7 +176,15 @@ int Func_ESTADO_ERROR(void)
 {
     io.ma = MOTOR_OFF;
     io.mc = MOTOR_OFF;
-    io.lamp = LAMP_ON; // La lampara enciende en estado de error
+
+    while(1)
+    {
+        //Hacer que el led/lampara parpadee mientras esta en este estado
+        io.lamp = LAMP_ON;
+        sleep(300);
+        io.lamp = LAMP_OFF;
+        sleep(300);
+    }
     return ESTADO_ERROR; // Mantenerse en estado de error
 }
 int Func_ESTADO_ABRIENDO(void)
@@ -271,7 +280,7 @@ int Func_ESTADO_CERRANDO(void)
         else if (config.cnt_RT>= TIME_CA)
         {
             return ESTADO_ERROR; /*En esta parte si el motor tarda
-                                   mas de lo debido dará un error
+                                   mas de lo debido darï¿½ un error
                                    */
         }
     }
