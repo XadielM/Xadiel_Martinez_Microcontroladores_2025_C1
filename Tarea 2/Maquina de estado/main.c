@@ -32,6 +32,9 @@
 #define PP_NOACTIVO 0
 #define PP_ACTIVO 1
 
+//Tiempo de cierre automatico de 10 segundos
+#define TIME_CA 10
+
 int Func_ESTADO_INICIAL(void);
 int Func_ESTADO_ERROR(void);
 int Func_ESTADO_ABRIENDO(void);
@@ -41,18 +44,8 @@ int Func_ESTADO_CERRADO(void);
 int Func_ESTADO_DETENIDA(void);
 int Func_ESTADO_DESCONOCIDO(void);
 
-/*typedef enum
-{
-    ESTADO_INICIAL,
-    ESTADO_ERROR,
-    ESTADO_ABRIENDO,
-    ESTADO_CERRANDO,
-    ESTADO_ABIERTO,
-    ESTADO_CERRADO,
-    ESTADO_FINAL
-} Estado;
-*/
-int ESTADO_SIGUIENTE = ESTADO INICIAL;
+
+int ESTADO_SIGUIENTE = ESTADO_INICIAL;
 int ESTADO_ANTERIOR = ESTADO_INICIAL;
 int ESTADO_ACTUAL = ESTADO_INICIAL;
 
@@ -74,9 +67,7 @@ struct SYSTEM_IO
 {
     unsigned int lsc:1;//Limit switch cerrado
     unsigned int lsa:1;//Limit switch abierto
-
-    unsigned int ftc:1;
-
+    unsigned int ftc:1; //Foto celda
     unsigned int ma:1; //Motor abrir
     unsigned int mc:1; //Motor cerrar
     unsigned int lamp:1;//Lampara
@@ -96,39 +87,48 @@ struct SYSTEM_CONFIG
 
 };
 
+struct SYSTEM_CONFIG config;
+
 int main()
 {
+    //Iniciando modo config
+    config.cnt_TCA = 0;
+    config.cnt_RT = 0;
+    config.CONFIG_FD = 0;
     for(;;)
     {
+        config.cnt_RT++;
+        config.cnt_TCA++;
+
         if (ESTADO_SIGUIENTE == ESTADO_INICIAL)
         {
             ESTADO_SIGUIENTE = Func_ESTADO_INICIAL();
         }
-        if (ESTADO_SIGUIENTE == ESTADO_ERROR)
+        else if (ESTADO_SIGUIENTE == ESTADO_ERROR)
         {
             ESTADO_SIGUIENTE = Func_ESTADO_ERROR();
         }
-        if (ESTADO_SIGUIENTE == ESTADO_ABIERTO)
+        else if (ESTADO_SIGUIENTE == ESTADO_ABIERTO)
         {
             ESTADO_SIGUIENTE = Func_ESTADO_ABIERTO();
         }
-        if (ESTADO_SIGUIENTE == ESTADO_CERRADO)
+        else if (ESTADO_SIGUIENTE == ESTADO_CERRADO)
         {
             ESTADO_SIGUIENTE = Func_ESTADO_CERRADO();
         }
-        if (ESTADO_SIGUIENTE == ESTADO_ABRIENDO)
+        else if (ESTADO_SIGUIENTE == ESTADO_ABRIENDO)
         {
             ESTADO_SIGUIENTE = Func_ESTADO_ABRIENDO();
         }
-        if (ESTADO_SIGUIENTE == ESTADO_CERRANDO)
+        else if (ESTADO_SIGUIENTE == ESTADO_CERRANDO)
         {
             ESTADO_SIGUIENTE = Func_ESTADO_CERRANDO();
         }
-        if (ESTADO_SIGUIENTE == ESTADO_DETENIDA)
+        else if (ESTADO_SIGUIENTE == ESTADO_DETENIDA)
         {
             ESTADO_SIGUIENTE = Func_ESTADO_DETENIDA();
         }
-        if (ESTADO_SIGUIENTE == ESTADO_DESCONOCIDO)
+        else if (ESTADO_SIGUIENTE == ESTADO_DESCONOCIDO)
         {
             ESTADO_SIGUIENTE = Func_ESTADO_DESCONOCIDO();
         }
@@ -156,15 +156,15 @@ int Func_ESTADO_INICIAL(void)
         {
             return ESTADO_ERROR;
         }
-        if(io.lsa == LM_ACTIVO && io.lsc == LM_NOACTIVO )
+        else if(io.lsa == LM_ACTIVO && io.lsc == LM_NOACTIVO )
         {
             return ESTADO_ABIERTO;
         }
-        if(io.lsa == LM_NOACTIVO && io.lsc == LM_ACTIVO )
+        else if(io.lsa == LM_NOACTIVO && io.lsc == LM_ACTIVO )
         {
             return ESTADO_CERRADO;
         }
-        if(io.lsa == LM_NOACTIVO && io.lsc == LM_NOACTIVO )
+        else if(io.lsa == LM_NOACTIVO && io.lsc == LM_NOACTIVO )
         {
             return ESTADO_DESCONOCIDO;
         }
@@ -173,16 +173,19 @@ int Func_ESTADO_INICIAL(void)
 }
 int Func_ESTADO_ERROR(void)
 {
-
+    io.ma = MOTOR_OFF;
+    io.mc = MOTOR_OFF;
+    io.lamp = LAMP_ON; // La lampara enciende en estado de error
+    return ESTADO_ERROR; // Mantenerse en estado de error
 }
 int Func_ESTADO_ABRIENDO(void)
 {
     //Inicial
     ESTADO_ANTERIOR = ESTADO_ACTUAL;
-    ESTADO ACTUAL = ESTADO_ABRIENDO;
+    ESTADO_ACTUAL = ESTADO_ABRIENDO;
 
     //Inicializar el estado
-    io.ma = MOTOR_OFF;
+    io.ma = MOTOR_ON; //Activamos el motor para abrir
     io.mc = MOTOR_OFF;
     io.lamp = LAMP_OFF;
 
@@ -192,11 +195,11 @@ int Func_ESTADO_ABRIENDO(void)
         {
             return ESTADO_ABIERTO;
         }
-        if (io.lsa == LM_ACTIVO && io.lsc == LM_ACTIVO)
+        else if (io.lsa == LM_ACTIVO && io.lsc == LM_ACTIVO)
         {
             return ESTADO_ERROR;
         }
-        if (io.pp == PP_ACTIVO)
+        else if (io.pp == PP_ACTIVO)
         {
             return ESTADO_DETENIDA;
         }
@@ -207,13 +210,12 @@ int Func_ESTADO_ABIERTO(void)
 {
     //Inicial
     ESTADO_ANTERIOR = ESTADO_ACTUAL;
-    ESTADO ACTUAL = ESTADO_ABIERTO;
+    ESTADO_ACTUAL = ESTADO_ABIERTO;
 
     //Inicializar el estado
     io.ma = MOTOR_OFF;
     io.mc = MOTOR_OFF;
     io.lamp = LAMP_OFF;
-    config.cnt_TCA = 0;
 
     for(;;)
     {
@@ -221,11 +223,15 @@ int Func_ESTADO_ABIERTO(void)
         {
             return ESTADO_CERRANDO;
         }
-        if(io.pp == PP_ACTIVO)
+        else if (io.keyc == 1)
         {
             return ESTADO_DETENIDA;
         }
-        if (io.lsa == LM_ACTIVO && io.lsc == LM_NOACTIVO)
+        else if(io.pp == PP_ACTIVO)
+        {
+            return ESTADO_DETENIDA;
+        }
+        else if (io.lsa == LM_ACTIVO && io.lsc == LM_NOACTIVO)
         {
             return ESTADO_ABIERTO;
         }
@@ -237,11 +243,11 @@ int Func_ESTADO_CERRANDO(void)
 {
     //Inicial
     ESTADO_ANTERIOR = ESTADO_ACTUAL;
-    ESTADO ACTUAL = ESTADO_ABIERTO;
+    ESTADO_ACTUAL = ESTADO_ABIERTO;
 
     //Inicializar el estado
     io.ma = MOTOR_OFF;
-    io.mc = MOTOR_OFF;
+    io.mc = MOTOR_ON; //Aqui activamos el motor para cerrar
     io.lamp = LAMP_OFF;
 
     for(;;)
@@ -250,17 +256,23 @@ int Func_ESTADO_CERRANDO(void)
         {
             return ESTADO_ERROR;
         }
-        if(config.cnt_RT >= TIME_CA)
+        else if(config.cnt_RT >= TIME_CA)
         {
             return ESTADO_ABRIENDO;
         }
-        if(io.pp == PP_ACTIVO)
+        else if(io.pp == PP_ACTIVO)
         {
             return ESTADO_DETENIDA;
         }
-        if(io.lsa == LM_NOACTIVO && io.lsc == LM_ACTIVO)
+        else if(io.lsa == LM_NOACTIVO && io.lsc == LM_ACTIVO)
         {
             return ESTADO_CERRADO;
+        }
+        else if (config.cnt_RT>= TIME_CA)
+        {
+            return ESTADO_ERROR; /*En esta parte si el motor tarda
+                                   mas de lo debido dará un error
+                                   */
         }
     }
 
@@ -269,7 +281,7 @@ int Func_ESTADO_CERRADO(void)
 {
     //Inicial
     ESTADO_ANTERIOR = ESTADO_ACTUAL;
-    ESTADO ACTUAL = ESTADO_ABIERTO;
+    ESTADO_ACTUAL = ESTADO_ABIERTO;
 
     //Inicializar el estado
     io.ma = MOTOR_OFF;
@@ -289,7 +301,7 @@ int Func_ESTADO_DETENIDA(void)
 {
     //Inicial
     ESTADO_ANTERIOR = ESTADO_ACTUAL;
-    ESTADO ACTUAL = ESTADO_ABIERTO;
+    ESTADO_ACTUAL = ESTADO_ABIERTO;
 
     //Inicializar el estado
     io.ma = MOTOR_OFF;
@@ -302,7 +314,7 @@ int Func_ESTADO_DETENIDA(void)
         {
             return ESTADO_ABIERTO;
         }
-        if (io.lsa == LM_NOACTIVO && io.lsc == LM_ACTIVO)
+        else if (io.lsa == LM_NOACTIVO && io.lsc == LM_ACTIVO)
         {
             return ESTADO_CERRADO;
         }
@@ -313,7 +325,7 @@ int Func_ESTADO_DESCONOCIDO(void)
 {
     //Inicial
     ESTADO_ANTERIOR = ESTADO_ACTUAL;
-    ESTADO ACTUAL = ESTADO_ABIERTO;
+    ESTADO_ACTUAL = ESTADO_ABIERTO;
 
     //Inicializar el estado
     io.ma = MOTOR_OFF;
