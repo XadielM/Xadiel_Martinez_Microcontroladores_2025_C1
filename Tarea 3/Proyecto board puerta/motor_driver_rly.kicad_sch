@@ -887,126 +887,6 @@
 				)
 			)
 		)
-		(symbol "power:+5V"
-			(power)
-			(pin_numbers hide)
-			(pin_names
-				(offset 0) hide)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "#PWR"
-				(at 0 -3.81 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Value" "+5V"
-				(at 0 3.556 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "Power symbol creates a global label with name \"+5V\""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "global power"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "+5V_0_1"
-				(polyline
-					(pts
-						(xy -0.762 1.27) (xy 0 2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 0) (xy 0 2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 2.54) (xy 0.762 1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "+5V_1_1"
-				(pin power_in line
-					(at 0 0 90)
-					(length 0)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-		)
 		(symbol "power:GND"
 			(power)
 			(pin_numbers hide)
@@ -1103,6 +983,126 @@
 				)
 			)
 		)
+		(symbol "power:VDD"
+			(power)
+			(pin_numbers hide)
+			(pin_names
+				(offset 0) hide)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "#PWR"
+				(at 0 -3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" "VDD"
+				(at 0 3.556 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Power symbol creates a global label with name \"VDD\""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "global power"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "VDD_0_1"
+				(polyline
+					(pts
+						(xy -0.762 1.27) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 2.54) (xy 0.762 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "VDD_1_1"
+				(pin power_in line
+					(at 0 0 90)
+					(length 0)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
 	)
 	(junction
 		(at 59.69 96.52)
@@ -1142,7 +1142,7 @@
 	)
 	(wire
 		(pts
-			(xy 59.69 96.52) (xy 59.69 97.79)
+			(xy 59.69 96.52) (xy 59.69 99.06)
 		)
 		(stroke
 			(width 0)
@@ -1202,13 +1202,13 @@
 	)
 	(wire
 		(pts
-			(xy 144.78 54.61) (xy 149.86 54.61)
+			(xy 80.01 73.66) (xy 80.01 71.12)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "44fba6c4-7bea-4bc0-b6d7-0ef01076de7a")
+		(uuid "288e52ea-a3e1-422c-bdb6-8ee44ad1bccd")
 	)
 	(wire
 		(pts
@@ -1219,16 +1219,6 @@
 			(type default)
 		)
 		(uuid "4762e8e7-aa11-4966-b77d-8cd13ff154b5")
-	)
-	(wire
-		(pts
-			(xy 80.01 71.12) (xy 83.82 71.12)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "50515a4b-f2f7-4536-8a7f-80e45cd8c7e5")
 	)
 	(wire
 		(pts
@@ -1259,6 +1249,16 @@
 			(type default)
 		)
 		(uuid "5eb512d3-694d-4dd7-8013-24e803555f88")
+	)
+	(wire
+		(pts
+			(xy 144.78 57.15) (xy 144.78 54.61)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "62b28150-1222-483d-b1d0-22405f972212")
 	)
 	(wire
 		(pts
@@ -1472,12 +1472,12 @@
 	)
 	(hierarchical_label "MOTOR1"
 		(shape input)
-		(at 149.86 54.61 0)
+		(at 144.78 57.15 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left)
+			(justify right)
 		)
 		(uuid "98e1d8be-46a9-402b-ac0f-12483066a078")
 	)
@@ -1505,27 +1505,27 @@
 	)
 	(hierarchical_label "MOTOR2"
 		(shape input)
-		(at 83.82 71.12 0)
+		(at 80.01 73.66 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left)
+			(justify right)
 		)
 		(uuid "e34c62da-a433-44e2-8ce0-d17f036acf8b")
 	)
 	(symbol
-		(lib_id "power:+5V")
-		(at 59.69 97.79 180)
+		(lib_id "power:VDD")
+		(at 124.46 81.28 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "0e4428b7-7d4e-4f7c-9be5-397a700b8f4c")
-		(property "Reference" "#PWR3"
-			(at 59.69 93.98 0)
+		(uuid "218c7ad4-62b3-4d07-9de7-7311882fa0d3")
+		(property "Reference" "#PWR16"
+			(at 124.46 77.47 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1533,8 +1533,8 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "+5V"
-			(at 59.69 102.87 0)
+		(property "Value" "VDD"
+			(at 124.46 86.36 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1542,7 +1542,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 59.69 97.79 0)
+			(at 124.46 81.28 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1551,7 +1551,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 59.69 97.79 0)
+			(at 124.46 81.28 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1559,8 +1559,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 59.69 97.79 0)
+		(property "Description" "Power symbol creates a global label with name \"VDD\""
+			(at 124.46 81.28 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1569,12 +1569,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "4f90cf3a-e0f9-4fcb-92e0-84b3c87460e7")
+			(uuid "8af8caec-1ff0-4538-afc6-d84c2df9b89d")
 		)
 		(instances
 			(project "Proyecto board puerta"
 				(path "/10750c3a-d383-45d6-b98c-cd879b600e84/470d22ce-1fe2-4179-8d6b-55797b69dbf4/842155f9-e599-44a4-a3e5-6e181bbdea1b"
-					(reference "#PWR3")
+					(reference "#PWR16")
 					(unit 1)
 				)
 			)
@@ -1850,17 +1850,17 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+5V")
-		(at 124.46 81.28 180)
+		(lib_id "power:VDD")
+		(at 59.69 99.06 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "7fc07dbd-c029-4c84-be07-b9aea879c679")
-		(property "Reference" "#PWR47"
-			(at 124.46 77.47 0)
+		(uuid "813af0fc-cde4-4efd-a989-ce57c3887f6e")
+		(property "Reference" "#PWR15"
+			(at 59.69 95.25 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1868,8 +1868,8 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "+5V"
-			(at 124.46 86.36 0)
+		(property "Value" "VDD"
+			(at 59.69 104.14 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1877,7 +1877,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 124.46 81.28 0)
+			(at 59.69 99.06 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1886,7 +1886,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 124.46 81.28 0)
+			(at 59.69 99.06 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1894,8 +1894,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 124.46 81.28 0)
+		(property "Description" "Power symbol creates a global label with name \"VDD\""
+			(at 59.69 99.06 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1904,12 +1904,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "cac71fa0-8334-40c3-bd00-5781554ef30d")
+			(uuid "e08a76b6-c3e8-41b0-9bb7-6a849b823693")
 		)
 		(instances
 			(project "Proyecto board puerta"
 				(path "/10750c3a-d383-45d6-b98c-cd879b600e84/470d22ce-1fe2-4179-8d6b-55797b69dbf4/842155f9-e599-44a4-a3e5-6e181bbdea1b"
-					(reference "#PWR47")
+					(reference "#PWR15")
 					(unit 1)
 				)
 			)
