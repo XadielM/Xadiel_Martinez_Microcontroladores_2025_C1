@@ -578,6 +578,14 @@
     [
       "10750c3a-d383-45d6-b98c-cd879b600e84",
       "Root"
+    ],
+    [
+      "470d22ce-1fe2-4179-8d6b-55797b69dbf4",
+      "Board_Micro"
+    ],
+    [
+      "842155f9-e599-44a4-a3e5-6e181bbdea1b",
+      "motor_driver_rly"
     ]
   ],
   "text_variables": {}
